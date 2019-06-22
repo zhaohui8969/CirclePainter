@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class P01 {
-
-
     public static void main(String[] args) {
         new P01();
     }
