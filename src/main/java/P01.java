@@ -93,13 +93,14 @@ public class P01 {
 
     public class PaintPane extends JPanel {
 
-        private int diveN = 3;
-        private int pointSize = 5;
+        private int diveN = 8;
+        private int pointSize = 2;
+        final Color backgroundColor = Color.GRAY;
 
         private BufferedImage background;
 
         public PaintPane() {
-            setBackground(Color.WHITE);
+            setBackground(backgroundColor);
             setForeground(Color.BLACK);
             MouseAdapter handler = new MouseAdapter() {
 
@@ -123,14 +124,10 @@ public class P01 {
             int xTransFromCenter = p.x - center.x;
             int yTransFromCenter = p.y - center.y;
             double r = Math.sqrt(Math.pow(xTransFromCenter, 2) + Math.pow(yTransFromCenter, 2));
-//            System.out.println("r = " + r);
-//            System.out.println("xTransFromCenter = " + xTransFromCenter);
-//            System.out.println("yTransFromCenter = " + yTransFromCenter);
             double thetaStart = Math.toDegrees(Math.acos(xTransFromCenter / r));
             if (yTransFromCenter > 0) {
                 thetaStart = 360 - thetaStart;
             }
-//            System.out.println("thetaStart = " + thetaStart);
             drawMultiDot(getCirclePointList(center, r, diveN, thetaStart));
         }
 
@@ -138,10 +135,8 @@ public class P01 {
             LinkedList<Point> pointLinkedList = new LinkedList<>();
             double diveTheta = 360f / n;
             for (double theta = thetaStart; theta < 360 + thetaStart; theta += diveTheta) {
-//                System.out.println("theta = " + theta);
                 final double xTrans = r * Math.cos(Math.toRadians(theta));
                 final double yTrans = r * Math.sin(Math.toRadians(theta));
-//                System.out.println("xTrans = " + xTrans);
                 pointLinkedList.add(new Point((int) (center.x + xTrans), (int) (center.y - yTrans)));
             }
             return pointLinkedList;
@@ -157,7 +152,6 @@ public class P01 {
 
             if (background == null) {
                 updateBuffer();
-                ;
             }
 
             if (background != null) {
@@ -180,7 +174,7 @@ public class P01 {
             if (getWidth() > 0 && getHeight() > 0) {
                 BufferedImage newBuffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
                 Graphics2D g2d = newBuffer.createGraphics();
-                g2d.setColor(Color.WHITE);
+                g2d.setColor(backgroundColor);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
                 if (background != null) {
                     g2d.drawImage(background, 0, 0, this);
